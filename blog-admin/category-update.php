@@ -9,12 +9,14 @@ if(isset($_GET['id'])){
 }
 
 $alert = "";
+$success ="";
 
 $errorIC = "Input is incorrect. Name contain letters only";
 $errorE = "Name filed is empty, please type category name";
 $errorUS = "Category create unsuccessful";
 
 $successS = "Category create successfully";
+$successSU = "Category updated successfully";
 $successDel = "Category deleted successfully";
 
 if(isset($_GET['alert'])){
@@ -23,7 +25,11 @@ if(isset($_GET['alert'])){
     
     if($alert == "successS"){
         $success = $successS;
-    } else if($alert == "successDel"){
+    } else
+    if($alert == "successSU"){
+        $success = $successSU;
+    } 
+    else if($alert == "successDel"){
         $success = $successDel;
     } else if($alert == "errorIC"){
         $error = $errorIC;
@@ -72,7 +78,7 @@ if($result->num_rows>0){
                 <section id="main-content">
                     <div class="row">
 
-                    <?php if($alert == "successS" || $alert == "successDel"){ ?>
+                    <?php if($alert == "successS" || $alert == "successDel" || $alert == "successUS"){ ?>
                         <div class="col-lg-12">
                             <div class="alert alert-success text-light h5">
 								<?php echo $success; ?>
@@ -92,7 +98,8 @@ if($result->num_rows>0){
                                 <div class="card-body">
                                     <div class="form-validation">
                                         <form class="form-valide" action="categoryUpdateStore.php" method="POST" enctype="multipart/form-data">
-                                            <div class="form-group row">
+                                        <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                        <div class="form-group row">
                                                 <label class="col-lg-4 col-form-label" for="name">Category Name <span class="text-danger">*</span></label>
                                                 <div class="col-lg-8">
                                                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter a category name.." value="<?php echo $row['name']; ?>">

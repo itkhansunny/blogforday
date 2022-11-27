@@ -11,6 +11,7 @@ $errorE = "Name filed is empty, please type category name";
 $errorUS = "Category create unsuccessful";
 
 $successS = "Category create successfully";
+$successSU = "Category updated successfully";
 $successDel = "Category deleted successfully";
 
 if(isset($_GET['alert'])){
@@ -19,7 +20,11 @@ if(isset($_GET['alert'])){
     
     if($alert == "successS"){
         $success = $successS;
-    } else if($alert == "successDel"){
+    } else
+     if($alert == "successSU"){
+        $success = $successSU;
+    } else
+     if($alert == "successDel"){
         $success = $successDel;
     } else if($alert == "errorIC"){
         $error = $errorIC;
@@ -65,7 +70,7 @@ $result = $conn->query($sql);
                 <section id="main-content">
                     <div class="row">
 
-                    <?php if($alert == "successS" || $alert == "successDel"){ ?>
+                    <?php if($alert == "successS" || $alert == "successDel" || $alert == "successSU"){ ?>
                         <div class="col-lg-12">
                             <div class="alert alert-success text-light h5">
 								<?php echo $success; ?>
@@ -140,7 +145,7 @@ $result = $conn->query($sql);
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer">
-                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+                                <p><?php echo date('Y'); ?> © Admin Board. - <a href="#">example.com</a></p>
                             </div>
                         </div>
                     </div>

@@ -65,7 +65,6 @@
                                 class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="category-create.php">Create Category</a></li>
-                            <li><a href="category-view.php">View All Category</a></li>
                         </ul>
                     </li>
                     <li><a class="sidebar-sub-toggle" href="settings.php"><i class="ti-target"></i> Settings</a>
