@@ -58,7 +58,7 @@
                                 class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="post-create.php">Create Post</a></li>
-                            <li><a href="post-view.php">View All Post</a></li>
+                            <li><a href="post-index.php">View All Post</a></li>
                         </ul>
                     </li>
                     <li><a class="sidebar-sub-toggle"><i class="ti-target"></i> Category <span

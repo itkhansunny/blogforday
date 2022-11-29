@@ -166,7 +166,48 @@ $result = $conn->query($sql);
     <!-- Select2 -->
     <script src="js/lib/select2/select2.full.min.js"></script>
     <script src="js/lib/form-validation/jquery.validate.min.js"></script>
-    <script src="js/lib/form-validation/jquery.validate-init.js"></script>
+    <script>
+        var form_validation = function() {
+    var e = function() {
+            jQuery(".form-valide").validate({
+                ignore: [],
+                errorClass: "invalid-feedback animated fadeInDown",
+                errorElement: "div",
+                errorPlacement: function(e, a) {
+                    jQuery(a).parents(".form-group > div").append(e)
+                },
+                highlight: function(e) {
+                    jQuery(e).closest(".form-group").removeClass("is-invalid").addClass("is-invalid")
+                },
+                success: function(e) {
+                    jQuery(e).closest(".form-group").removeClass("is-invalid"), jQuery(e).remove()
+                },
+                rules: {
+                    "name": {
+                        required: !0,
+                        minlength: 3
+                    },
+                },
+                messages: {
+                    "name": {
+                        required: "Please enter a category",
+                        minlength: "Your category must consist of at least 3 characters"
+                    },
+                }
+            })
+        }
+        return {
+            init: function() {
+                e(), a(), jQuery(".js-select2").on("change", function() {
+                    jQuery(this).valid()
+                })
+            }
+        }
+    }();
+    jQuery(function() {
+        form_validation.init()
+});
+    </script>
     <script src="js/lib/bootstrap.min.js"></script><script src="js/scripts.js"></script>
     <!-- scripit init-->
     <script src="https://cdn.tiny.cloud/1/hbom4kson0fnyjyu21op1vgxzwht5yolpe0nnchomyn17vrw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
