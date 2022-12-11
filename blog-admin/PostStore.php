@@ -50,10 +50,10 @@ function handelFile($uploadFolder, $MaxFileSize, $fileAttName ){
 if(isset($_POST['submit'])){
     
     $title          = $_POST['post-title'];
-    $content        = $_POST['post-content'];
+    $content        = addslashes($_POST['post-content']);
     $category       = $_POST['post-category'];
     $status         = $_POST['post-status'];
-    $titleSlug      = strtolower(trim($title));
+    $titleSlug      = str_replace(" ","-",strtolower($title));
     $createon       = $updateon = time();
 
     if(empty($title)){

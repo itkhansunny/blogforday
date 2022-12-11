@@ -92,6 +92,18 @@ function time_Ago($time) {
     }
 }
 
+//Get settings value start
+
+function getSValue($key)
+{
+    include("db.php");
+    $sql = "SELECT * FROM settings WHERE skey='$key'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['svalue'];
+}
+
+//Get settings value end
 
 ?>
 
@@ -105,7 +117,7 @@ function time_Ago($time) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- theme meta -->
     <meta name="theme-name" content="focus" />
-    <title>Focus Admin: Creative Admin Dashboard</title>
+    <title><?php echo getSValue("name"); ?> | <?php echo getSValue("description"); ?></title>
     <!-- ================= Favicon ================== -->
     <!-- Standard -->
     <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
@@ -145,28 +157,27 @@ function time_Ago($time) {
                     </a>
                        
                     </li>
-                    
-                    <li><a class="sidebar-sub-toggle"><i class="ti-target"></i> Pages <span
-                                class="sidebar-collapse-icon ti-angle-down"></span></a>
-                        <ul>
-                            <li><a href="page-create.php">Create Pages</a></li>
-                            <li><a href="page-view.php">View All Pages</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="sidebar-sub-toggle"><i class="ti-target"></i> Post <span
+                    <li><a class="sidebar-sub-toggle"><i class="ti-pencil"></i> Post <span
                                 class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="post-create.php">Create Post</a></li>
                             <li><a href="post-index.php">View All Post</a></li>
                         </ul>
                     </li>
-                    <li><a class="sidebar-sub-toggle"><i class="ti-target"></i> Category <span
+                    <li><a class="sidebar-sub-toggle"><i class="ti-menu-alt"></i> Category <span
                                 class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="category-create.php">Create Category</a></li>
                         </ul>
                     </li>
-                    <li><a class="sidebar-sub-toggle" href="settings.php"><i class="ti-target"></i> Settings</a>
+                    <li><a class="sidebar-sub-toggle"><i class="ti-layers"></i> Pages <span
+                                class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="page-create.php">Create Pages</a></li>
+                            <li><a href="page-view.php">View All Pages</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="settings.php"><i class="ti-panel"></i> Settings</a>
                     </li>
                     <li><a><i class="ti-close"></i> Logout</a></li>
                 </ul>

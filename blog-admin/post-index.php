@@ -1,4 +1,5 @@
 <?php 
+session_start();
 
 include("header.php");
 
@@ -60,6 +61,13 @@ $result = $conn->query($sql);
                 <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
+                    <?php if(isset($_SESSION['success'])){ ?>
+                        <div class="col-lg-12">
+                            <div class="alert alert-success text-light h5">
+								<?php echo $_SESSION['success']; ?>
+							</div>
+                        </div>
+                    <?php } ?>
                     <?php if($success != ""){ ?>
                         <div class="col-lg-12">
                             <div class="alert alert-success text-light h5">
@@ -99,8 +107,8 @@ $result = $conn->query($sql);
                                                     <td><?php echo time_Ago($post['createon']); ?></td>
                                                     <td><?php echo time_Ago($post['updateon']); ?></td>
                                                     <td>
-                                                        <a class="btn btn-info" href="post-update.php">Update</a>
-                                                        <a class="btn btn-danger" href="post-delete.php">Delete</a>
+                                                        <a class="btn btn-info" href="post-update.php?id=<?php echo $post['id']; ?>">Update</a>
+                                                        <a class="btn btn-danger" href="post-delete.php?id=<?php echo $post['id']; ?> " onclick="return confirm('Are you sure delete this post from the blog?')">Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php } ?>

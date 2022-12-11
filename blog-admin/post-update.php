@@ -1,50 +1,27 @@
 <?php 
 
-include("header.php"); 
+include("header.php");
 
 include("db.php");
 
-$alert = $success = $error = "";
-
-$eTitle     = "Title should not be empty";
-$eContent   = "Content should not be empty";
-$eCategory  = "Please select a category";
-$eStatus    = "Please select a status";
-$uFail      = "Image upload failed";
-$invFormat  = "Invalid image format or size";
-
-if(isset($_GET['alert'])){
-    
-    $alert = $_GET['alert'];
-    
-    if($alert == "eTitle"){
-        $error = $eTitle;
-    } else
-     if($alert == "eContent"){
-        $error = $eContent;
-    } else
-     if($alert == "eCategory"){
-        $error = $eCategory;
-    } else if($alert == "eStatus"){
-        $error = $eStatus;
-    }
-    else if($alert == "uFail"){
-        $error = $uFail;
-    }
-    else if($alert == "invFormat"){
-        $error = $invFormat;
-    }
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
 }
 
+$sqlC = "SELECT * FROM category";
 
-$tableCategory = "category";
+$resultC = $conn->query($sqlC);
 
-$sql = "SELECT * FROM {$tableCategory}";
+$sqlP = "SELECT * FROM post WHERE id='{$id}'";
 
-$result = $conn->query($sql);
+$resultP = $conn->query($sqlP);
 
+if($resultP->num_rows>0){
+$post = $resultP->fetch_assoc();
+
+    
 ?>
-
+    
     <div class="content-wrap">
         <div class="main">
             <div class="container-fluid">
@@ -72,36 +49,23 @@ $result = $conn->query($sql);
                 <!-- /# row -->
                 <section id="main-content">
                     <div class="row">
-                    <?php if($success != ""){ ?>
-                        <div class="col-lg-12">
-                            <div class="alert alert-success text-light h5">
-								<?php echo $success; ?>
-							</div>
-                        </div>
-                    <?php } ?>
-
-                    <?php if($error != ""){ ?>
-                        <div class="col-lg-12">
-                            <div class="alert alert-danger text-light h5">
-								<?php echo $error; ?>
-							</div>
-                        </div>
-                    <?php } ?>
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="form-validation">
-                                        <form class="form-valide" action="postStore.php" method="POST" enctype="multipart/form-data">
+                                        <form class="form-valide" action="postUpdateStore.php" method="POST" enctype="multipart/form-data">
+                                            <input type="hidden" name="id" value="<?php echo $post['id'] ?>">
+                                            <input type="hidden" name="image" value="<?php echo $post['image'] ?>">
                                             <div class="form-group row">
                                                 <label class="col-lg-4 col-form-label" for="post-title">Post Title <span class="text-danger">*</span></label>
                                                 <div class="col-lg-8">
-                                                    <input type="text" class="form-control" id="post-title" name="post-title" placeholder="Enter a title..">
+                                                    <input type="text" class="form-control" id="post-title" name="post-title" placeholder="Enter a title.." value="<?php echo $post['title'] ?>">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-4 col-form-label" for="post-content">Post Description <span class="text-danger">*</span></label>
                                                 <div class="col-lg-8">
-                                                    <textarea class="form-control" name="post-content" id="post-content" cols="30" rows="10"></textarea>
+                                                    <textarea class="form-control" name="post-content" id="post-content" cols="30" rows="10"><?php echo $post['description'] ?></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -110,9 +74,9 @@ $result = $conn->query($sql);
                                                     <select class="js-select2 form-control" id="post-category" name="post-category" style="width: 100%;">
                                                         <option value="">--- Select ---</option>
                                                         
-                                                        <?php while ($category = $result->fetch_assoc()) {
+                                                        <?php while ($category = $resultC->fetch_assoc()) {
                                                             ?>
-                                                            <option value="<?php echo $category['slug']; ?>"><?php echo $category['name']; ?></option>   
+                                                            <option value="<?php echo $category['slug']; ?>" <?php echo ($category['slug'] == $post['category'])?'selected':'' ?>><?php echo $category['name']; ?></option>   
                                                             <?php
                                                         } ?>
                                                         
@@ -124,8 +88,8 @@ $result = $conn->query($sql);
                                                 <div class="col-lg-8">
                                                     <select class="js-select2 form-control" id="post-status" name="post-status" style="width: 100%;">
                                                         <option value="">--- Select ---</option>
-                                                        <option value="publish">Publish</option>
-                                                        <option value="draft">Draft</option>
+                                                        <option value="publish" <?php echo ($post['status']=='publish')?'selected':'' ?>>Publish</option>
+                                                        <option value="draft" <?php echo ($post['status']=='draft')?'selected':'' ?>>Draft</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -236,13 +200,15 @@ jQuery(function() {
     <script src="https://cdn.tiny.cloud/1/hbom4kson0fnyjyu21op1vgxzwht5yolpe0nnchomyn17vrw/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
     tinymce.init({
-      selector: 'textarea',
-      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        selector: 'textarea',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
     });
-  </script>
+    </script>
 
 
 </body>
 
 </html>
+    
+<?php }
