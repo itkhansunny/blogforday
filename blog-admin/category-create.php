@@ -100,18 +100,19 @@ $result = $conn->query($sql);
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php while ($data = $result->fetch_assoc()) { ?>
-                                                    <tr>
-                                                        <th scope="row"><?php echo $data['id']; ?></th>
-                                                        <td><?php echo $data['name']; ?></td>
-                                                        <td><?php echo $data['slug']; ?></td>
-                                                        <td><?php echo $t = $data['createtime']; ?></td>
-                                                        <td>
-                                                            <a class="btn btn-primary" href="category-update.php?id=<?php echo $data['id']; ?>">Edit</a>
-                                                            <a class="btn btn-danger" href="category-delete.php?id=<?php echo $data['id']; ?>" onclick="return confirm('Are you sure delete this information')">Delete</a>
-                                                    
-                                                        </td>
-                                                    </tr>
+                                                <?php 
+                                                foreach ($result->fetch_all(MYSQLI_ASSOC) as $key => $row) { ?>
+                                                <tr>
+                                                    <th scope="row"><?php echo ($key+1); ?></th>
+                                                    <td><?php echo $row['name']; ?></td>
+                                                    <td><?php echo $row['slug']; ?></td>
+                                                    <td><?php echo $t = $row['createtime']; ?></td>
+                                                    <td>
+                                                        <a class="btn btn-primary" href="category-update.php?id=<?php echo $row['id']; ?>">Edit</a>
+                                                        <a class="btn btn-danger" href="category-delete.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure delete this information')">Delete</a>
+                                                
+                                                    </td>
+                                                </tr>
                                                 <?php } ?>
                                             </tbody>
                                         </table>

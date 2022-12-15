@@ -1,4 +1,7 @@
-<?php 
+<?php
+session_start();
+
+// Time ago function
 function time_Ago($time) {
   
     // Calculate difference between current
@@ -105,6 +108,13 @@ function getSValue($key)
 
 //Get settings value end
 
+//Login check
+if(empty($_SESSION['logIn'])){
+    if($_SESSION['logIn'] != 1){
+        header("location:login.php");
+    }
+}
+
 ?>
 
 
@@ -150,7 +160,7 @@ function getSValue($key)
         <div class="nano">
             <div class="nano-content">
                 <ul>
-                    <div class="logo"><a href="index.html">
+                    <div class="logo"><a href="index.php">
                             <!-- <img src="images/logo.png" alt="" /> --><span>Blog Admin</span></a></div>
                     <li class="label">Main</li>
                     <li><a href="index.php"><i class="ti-home"></i> Dashboard 
@@ -177,9 +187,9 @@ function getSValue($key)
                             <li><a href="page-view.php">View All Pages</a></li>
                         </ul>
                     </li>
-                    <li><a href="settings.php"><i class="ti-panel"></i> Settings</a>
-                    </li>
-                    <li><a><i class="ti-close"></i> Logout</a></li>
+                    <li><a href="settings.php"><i class="ti-panel"></i> Settings</a></li>
+                    <li><a href="changePassword.php"><i class="ti-panel"></i> Change Password</a></li>
+                    <li><a href="logout.php"><i class="ti-close"></i> Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -200,7 +210,7 @@ function getSValue($key)
                     <div class="float-right">
                         <div class="dropdown dib">
                             <div class="header-icon" data-toggle="dropdown">
-                                <span class="user-avatar">John
+                                <span class="user-avatar"><?php echo $_SESSION['username']; ?>
                                     <i class="ti-angle-down f-s-10"></i>
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">

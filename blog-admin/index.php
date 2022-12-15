@@ -1,4 +1,25 @@
-<?php include("header.php"); ?>
+<?php 
+include("header.php");
+include("db.php");
+
+// Total Post query
+
+$totalPostSql       = "SELECT COUNT(*) FROM post WHERE status='publish'";
+$countPostResult    = $conn->query($totalPostSql);
+$totalPost          = $countPostResult->fetch_array(MYSQLI_NUM)[0];
+
+// Total Page query
+
+// $totalPageSql = "SELECT COUNT(*) FROM page WHERE status='publish'";
+// $countPageResult = $conn->query($totalPageSql);
+// $totalPage = $countPageResult->fetch_array(MYSQLI_NUM)[0];
+
+// Total Category query
+
+$totalCatSql    = "SELECT COUNT(*) FROM category";
+$countCatResult = $conn->query($totalCatSql);
+$totalCategory  = $countCatResult->fetch_array(MYSQLI_NUM)[0];
+?>
 
     <div class="content-wrap">
         <div class="main">
@@ -34,7 +55,7 @@
                                     </div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">Total Post</div>
-                                        <div class="stat-digit">0</div>
+                                        <div class="stat-digit"><?php echo $totalPost; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +67,7 @@
                                     </div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">Total Page</div>
-                                        <div class="stat-digit">3</div>
+                                        <div class="stat-digit">0</div>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +79,7 @@
                                     </div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">Total Category</div>
-                                        <div class="stat-digit">0</div>
+                                        <div class="stat-digit"><?php echo $totalCategory; ?></div>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,5 @@
-<?php 
+<?php
+session_start();
 
 include("db.php");
 
@@ -7,7 +8,7 @@ $table = "category";
 if(isset($_POST['submit'])){
     
     $name = $_POST['name'];
-    $slug = strtolower(trim($name));
+    $slug = str_replace(" ", "", strtolower($name));
 
     if(!empty($name)){
         if(!preg_match('/^[a-zA-Z\s]/',$name)){
@@ -25,5 +26,11 @@ if(isset($_POST['submit'])){
         header("location:category-create.php?alert=successS");
     }else{
         header("location:category-create.php?alert=errorUS");
+    }
+}
+
+if(empty($_SESSION['logIn'])){
+    if($_SESSION['logIn'] != 1){
+        header("location:login.php");
     }
 }

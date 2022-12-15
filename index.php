@@ -15,7 +15,7 @@ if(isset($_GET['page'])){
   $pageNo = 1;
 }
 
-$recordPerPage = 2;
+$recordPerPage = 3;
 $offset = ($pageNo-1)*$recordPerPage;
 
 // Total post query

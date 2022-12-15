@@ -1,12 +1,6 @@
-<?php
-session_start();
-include("config.php");
+<?php 
+include("blog-admin/config.php");
 
-if(isset($_SESSION['logIn'])){
-    if($_SESSION['logIn']){
-        header("location:index.php");
-    }
-}
 
 ?>
 
@@ -33,11 +27,11 @@ if(isset($_SESSION['logIn'])){
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 
     <!-- Styles -->
-    <link href="css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="css/lib/themify-icons.css" rel="stylesheet">
-    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
-    <link href="css/lib/helper.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="blog-admin/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="blog-admin/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="blog-admin/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="blog-admin/css/lib/helper.css" rel="stylesheet">
+    <link href="blog-admin/css/style.css" rel="stylesheet">
 </head>
 
 <body class="bg-primary">
@@ -51,20 +45,15 @@ if(isset($_SESSION['logIn'])){
                             <a href="#"><span><?php echo getSValue("name"); ?></span></a>
                         </div>
                         <div class="login-form">
-                            <h4>Administratior Login</h4>
-                            <?php if(isset($_SESSION['error'])){ ?>
-                                    <div>
-                                            <div class="alert alert-danger text-light h5">
-                                                    <?php echo $_SESSION['error']; 
-                                                    unset($_SESSION['error']);
-                                                    ?>
-                                            </div>
-                                    </div>
-                            <?php } ?>
-                            <form action="loginCheck.php" method="POST">
+                            <h4>Blog Registration</h4>
+                            <form action="register.php" method="POST">
                                 <div class="form-group">
-                                    <label>Username or Email address</label>
-                                    <input type="text" class="form-control" name="username" placeholder="Username or Email address">
+                                    <label>User Name</label>
+                                    <input type="text" class="form-control" name="username" placeholder="User Name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email address</label>
+                                    <input type="email" class="form-control" name="email" placeholder="Email">
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
@@ -72,16 +61,12 @@ if(isset($_SESSION['logIn'])){
                                 </div>
                                 <div class="checkbox">
                                     <label>
-										<input type="checkbox"> Remember Me
+										<input type="checkbox"> Agree the terms and policy 
 									</label>
-                                    <label class="pull-right">
-										<a href="#">Forgotten Password?</a>
-									</label>
-
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" name="login" value="login">Login</button>
+                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30" name="register" value="register">Register</button>
                                 <div class="register-link m-t-15 text-center">
-                                    <p>Don't have account ? <a href="../registration.php"> Registration</a></p>
+                                    <p>Already have account ? <a href="#"> Sign in</a></p>
                                 </div>
                             </form>
                         </div>

@@ -1,4 +1,6 @@
 <?php 
+session_start();
+
 include("db.php");
 
 $table = "post";
@@ -81,5 +83,11 @@ if(isset($_POST['submit'])){
 
     if($conn->query($sql)){
         header("location:post-index.php?alert=successS");
+    }
+}
+
+if(empty($_SESSION['logIn'])){
+    if($_SESSION['logIn'] != 1){
+        header("location:login.php");
     }
 }
